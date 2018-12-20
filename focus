@@ -1,0 +1,20 @@
+django ajax的post请求 csrftoken问题：
+    1.在发起ajax请求的页面中藏个input，value值{{csrf_token}}
+    2.发起ajax时，设置请求头 headers:{ "X-CSRFtoken":$('#csrftoken').val()},
+
+
+2.提取多个应用到apps
+    第一步 新建一个文件夹 apps
+
+    第二步将所有的app拖到apps中，会提示勾选Search for references ，把这个勾去掉
+
+    第三步选中apps文件夹，右键Make Directory As -> Resoure Root
+
+    第四步 在setting.py 中添加 sys.path.insert(0,os.path.join(BASE_DIR,”apps”))
+    这样的话就把apps添加进去了，在命令行运行也不会报错
+
+
+3.共用模板 include with
+    header
+    footer
+    https://www.cnblogs.com/zf-l/p/django-include.html
