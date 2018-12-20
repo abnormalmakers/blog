@@ -4554,7 +4554,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		// Make sure we update the tween properties later on
 		valueParts = valueParts || [];
 
-		// Iteratively approximate from a nonzero starting point
+		// Iteratively approximate from a nonzero starting focus
 		initialInUnit = +initial || 1;
 
 		do {
@@ -6262,7 +6262,7 @@ function vendorPropName( name ) {
 function setPositiveNumber( elem, value, subtract ) {
 
 	// Any relative (+/-) values have already been
-	// normalized at this point
+	// normalized at this focus
 	var matches = rcssNum.exec( value );
 	return matches ?
 
@@ -6298,16 +6298,16 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 			}
 
-			// At this point, extra isn't border nor margin, so remove border
+			// At this focus, extra isn't border nor margin, so remove border
 			if ( extra !== "margin" ) {
 				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
 		} else {
 
-			// At this point, extra isn't content, so add padding
+			// At this focus, extra isn't content, so add padding
 			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 
-			// At this point, extra isn't content nor padding, so add border
+			// At this focus, extra isn't content nor padding, so add border
 			if ( extra !== "padding" ) {
 				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
@@ -6737,7 +6737,7 @@ jQuery.easing = {
 
 jQuery.fx = Tween.prototype.init;
 
-// Back compat <1.8 extension point
+// Back compat <1.8 extension focus
 jQuery.fx.step = {};
 
 
@@ -10029,7 +10029,7 @@ jQuery.fn.extend( {
 	// but those exceptions were never presented as a real life use-cases
 	// and might be considered as more preferable results.
 	//
-	// This logic, however, is not guaranteed and can change at any point in the future
+	// This logic, however, is not guaranteed and can change at any focus in the future
 	offsetParent: function() {
 		return this.map( function() {
 			var offsetParent = this.offsetParent;
