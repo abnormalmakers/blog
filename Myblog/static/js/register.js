@@ -2,28 +2,42 @@ var register={
     //初始化验证码计时器
     timer:null,
     //初始化验证码倒计时时间
-    countdown:10,
+    countdown:60,
     // 检测注册表单是否填写完整,手机号是否合法
     // 参数为表单信息
     // 返回布尔值
     checkForm:function(phone,passw,confirmpassw,msgcode){
+        console.log(passw.length)
         $('.register-errmsg').css('display','none')
         if(!phone){
+            //手机号为空
             $('.register-errmsg-phone').css('display','block').text('手机号不能为空');
             return false
         }else if(!this.checkPhone(phone)){
+            //手机号不存在
             $('.register-errmsg-phone').css('display','block').text('手机号不存在');
             return false
         }else if(!passw){
-            $('.register-errmsg-passw').css('display','block');
+            //密码为空
+            $('.register-errmsg-passw').css('display','block').text('密码不能为空');
             return false
+        }else if(6>passw.length || passw.length>11){
+        //    密码长度为6-11
+            $('.register-errmsg-passw').css('display','block').text('密码长度为6-11位')
         }else if(!confirmpassw){
-            $('.register-errmsg-surepassw').css('display','block');
+            //确认密码为空
+            $('.register-errmsg-surepassw').css('display','block').text('确认密码不能为空');
+            return false
+        }else if(confirmpassw!=passw){
+            //密码输入不一致
+            $('.register-errmsg-surepassw').css('display','block').text('密码输入不一致');
             return false
         }else if(!msgcode){
+            //验证码输入不正确
             $('.register-errmsg-msgcode').css('display','block');
             return false
         }else{
+            //表单验证成功
             return true
         }
     },
@@ -40,6 +54,28 @@ var register={
         } else {
             return true;
         }
+    },
+//   发送验证码ajax
+    msgcodeAjax:function(csrf_token,re_content,phone){
+        //向后台发起ajax请求
+        $.ajax({
+            url:'/register/',
+            type:'post',
+            dataType:'json',
+            headers:{ "X-CSRFtoken":csrf_token},
+            data:{
+                're_content':re_content,
+                'phone':phone
+            },
+            success:function(data){
+                console.log(data)
+                if(data.code==0){
+                    console.log('短信发送成功')
+                }else{
+                    console.log("短信发送失败")
+                }
+            }
+        })
     }
 };
 
@@ -60,18 +96,20 @@ $(function(){
         }else{
             $('.register-errmsg-phone').css('display','none');
         }
+        
         //打开验证码遮罩
         $('#register-sendemail-model').css('display','block');
 
         //防止前端手动去掉遮罩导致短信重发
-        if(register.countdown!=0 && register.countdown!=10){
+        if(register.countdown!=0 && register.countdown!=60){
             return false
         }
-        //向后端发送手机号
-
+        //向后端发送 经过验证后的手机号
+        csrf_code=$('#csrftoken').val();
+        register.msgcodeAjax(csrf_code,'msg_code',rephone);
 
         //重新初始化计时数
-        register.countdown=10;
+        register.countdown=60;
 
         //清除定时器
         clearInterval(register.timer);
@@ -107,21 +145,7 @@ $(function(){
         //验证表单是否有效
         FormisValide=register.checkForm(rephone,repassword,reconfirmpassword,remsgcode);
         console.log(FormisValide)
-
-        //向后台发起ajax请求
-        $.ajax({
-            url:'/register/',
-            type:'post',
-            dataType:'json',
-            headers:{ "X-CSRFtoken":$('#csrftoken').val()},
-            data:{
-                'phone':$('#register-phone').val()
-            },
-            success:function(data){
-                console.log(data,typeof(data))
-                console.log(data.code)
-            }
-        })
+        
     });
 
 

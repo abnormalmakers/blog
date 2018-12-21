@@ -1,0 +1,13 @@
+register:
+    re_content:请求内容
+    验证码：msg_code
+    注册:user_register
+
+注册模块返回接口：
+     成功：{"code":0,"data":"发送成功"}
+
+	 失败：{'code': 1,'msg': '验证码发送失败'}
+	        {'code': 2,'msg': '手机号不合法'}
+	        {'code': 3,'msg': '密码不合法'}
+	        {'code': 4,'msg': '确认密码不合法'}
+	        {'code': 5,'msg': '验证码不正确'}

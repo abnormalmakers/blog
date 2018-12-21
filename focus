@@ -18,3 +18,25 @@ django ajax的post请求 csrftoken问题：
     header
     footer
     https://www.cnblogs.com/zf-l/p/django-include.html
+
+
+4. ssl：certificate_verify_failed
+    产生这个问题的原因在于python本身，pyhon升级到2.7.9以后，引入了一个新特性，当使用urllib打开https的链接时，会检验一次ssl证书。
+    而当目标网站使用的是自签名证书时，就会抛出urllib2.URLError的错误。（这里虚拟机就是用的自带的签名证书，
+    所以我们从服务器连接vmware时会出现这种错误）。
+
+        那么，解决方案如下两种方式：
+
+        1.全局取消证书验证（当项目对安全性问题不太重视时，推荐使用，可以全局取消证书的验证，简易方便）
+        (我在django的项目初始化文件例直接取消)
+            import ssl
+            ssl._create_default_https_context = ssl._create_unverified_context
+
+
+        2.使用ssl创建未验证的上下文，在url中传入上下文参数（当项目整体非常重视安全问题时，推荐这种方式，可以局部取消证书验证）
+            import ssl
+            context = ssl._create_unverified_context()
+            将context传入url函数的context参数中，比如
+
+            urllib2.urlopen（'目标网址'，context=context）.read()
+            这样就解决了ssl：certificate_verify_failed这个问题，成功运行脚本
