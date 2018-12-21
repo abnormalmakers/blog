@@ -3,7 +3,6 @@ from django.views.generic.base import View
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core.signing import Signer
 from .models import Users
-import main
 import zhenzismsclient as smsclient
 import json
 import re
@@ -37,7 +36,7 @@ class Regster_post():
             if result['code'] == 0:
                 print('存放session')
                 self.request.session['valid_code'] = valid_code
-                self.request.session.set_expiry(60)
+                self.request.session.set_expiry(2*60)
             return json.dumps(result)
         except Exception as e:
             print(e)
@@ -47,8 +46,9 @@ class Regster_post():
     def register_post(self):
         pass
 
-    @staticmethod
+
     # 随机生成6位数验证码
+    @staticmethod
     def generate_valid_code():
         arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         s = ''
@@ -91,16 +91,14 @@ class Register_views(View):
         #检测手机号是否已存在
         isRegistered=self.phoneIsRepeat(phone)
         if isRegistered:
-            dic = {'code': 3, 'msg': "手机号已存在"}
+            dic = {'code': 103, 'msg': "手机号已存在"}
             return HttpResponse(json.dumps(dic), content_type='application/json')
-
-
 
         # 后端二次验证手机号是否合法
         is_valid=self.phoneIsValid(phone)
         if not is_valid:
             dic = {
-                'code': 2,
+                'code': 102,
                 'msg': '手机号不合法'
             }
             return HttpResponse(json.dumps(dic), content_type='application/json')
@@ -108,27 +106,38 @@ class Register_views(View):
         # 判断请求内容
         if re_content=='msg_code':
             #发送验证码请求
-
             # 创建register_post请求对象
             register_post=Regster_post(request,self.__apiUrl,self.__appId,self.__appSecret,phone)
             # 返回短信发送结果
             self.__result=register_post.valid_code_post()
             if not self.__result:
-                self.__result={'code':1,'data':'发送失败'}
+                self.__result={'code':101,'data':'验证码发送失败'}
             return HttpResponse(self.__result, content_type='application/json')
         elif re_content=='user_register':
             # 用户注册请求
+            # 检测验证码是否正确且未失效
+            check_valid_code=request.session.get('valid_code',None)
+            if check_valid_code==msgcode:
+                # 验证码正确，将用户资料入库
+                #后端二次验证表单,密码二次加密
+                signer=Signer()
+                #二次加密后的密码
+                passw_salt=signer.sign(passw)
+                #插入数据库
+                try:
+                    Users.objects.create(phone=phone,password=passw_salt,is_active=True)
+                    dic = {'code': 200, 'msg': '插入用户成功'}
+                    return HttpResponse(json.dumps(dic), content_type='application/json')
+                except Exception as e:
+                    dic={'code':108,'msg':'插入用户失败'}
+                    return HttpResponse(json.dumps(dic),content_type='application/json')
+            else:
+                dic = {'code': 106, 'msg': '验证码不正确'}
+                return HttpResponse(json.dumps(dic), content_type='application/json')
 
-            #后端二次验证表单,密码二次加密
-            signer=Signer()
-            #二次加密后的密码
-            passw_salt=signer.sign(passw)
-
-
-            # return HttpResponse(json.dumps(dic),content_type='application/json')
         else:
             dic = {
-                'code': 7,
+                'code': 107,
                 'msg': '参数传递错误'
             }
             return HttpResponse(json.dumps(dic),content_type='application/json')
