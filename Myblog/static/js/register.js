@@ -142,10 +142,34 @@ $(function(){
         reconfirmpassword=$("#register-confirmpassword").val();
         //验证码
         remsgcode=$('#register-msgcode').val();
-        //验证表单是否有效
+        //验证表单是否有效，返回布尔值
         FormisValide=register.checkForm(rephone,repassword,reconfirmpassword,remsgcode);
         console.log(FormisValide)
-        
+
+        //获取csrftoken码
+        csrf_code=$('#csrftoken').val();
+
+        if(FormisValide){
+        //    加密密码
+            repassword=sha256_digest(repassword)
+            console.log(repassword)
+        //    表单有效，向后端发起ajax请求
+            $.ajax({
+                url:'/register/',
+                type:'post',
+                dataType:'json',
+                headers:{"X-CSRFtoken":csrf_code},
+                data:{
+                    're_content':'user_register',
+                    'phone':rephone,
+                    'password':repassword,
+                    'msgcode':remsgcode
+                },
+                success:function(data){
+                    console.log(data)
+                }
+            })
+        }
     });
 
 

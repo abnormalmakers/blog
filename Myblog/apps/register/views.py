@@ -64,7 +64,7 @@ class Register_views(View):
     def post(self,request):
         # 判断 是注册请求还是发送验证码
         re_content=request.POST.get('re_content',None)
-
+        # 接受前端注册表单信息
         # 手机号
         phone=request.POST.get('phone',None)
         # 密码
@@ -73,16 +73,17 @@ class Register_views(View):
         comfirm_passw=request.POST.get('comfirm_passw',None)
         # 验证码
         msgcode=request.POST.get('msgcode',None)
+        # 返回结果
+        result=''
 
         # 后端判断手机号是否合法
         is_valid=main.phoneIsValid(phone)
         if not is_valid:
             dic = {
-                'code': 1,
+                'code': 2,
                 'msg': '手机号不合法'
             }
             return HttpResponse(json.dumps(dic), content_type='application/json')
-
         # 判断请求内容
         if re_content=='msg_code':
         #     创建register_post请求对象
@@ -93,11 +94,12 @@ class Register_views(View):
                 result={'code':1,'data':'发送失败'}
             return HttpResponse(result, content_type='application/json')
         elif re_content=='user_register':
-        #     后端二次验证表单
-            pass
+        #   后端二次验证表单,二次加密
+
+            return HttpResponse('ok',content_type='application/json')
         else:
             dic = {
-                'code': 'err',
+                'code': 6,
                 'msg': '参数传递错误'
             }
             return HttpResponse(json.dumps(dic),content_type='application/json')
