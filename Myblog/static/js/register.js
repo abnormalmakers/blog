@@ -88,6 +88,34 @@ var register={
         $('#register-sendemail-model').css('display','none')
         //    重新发送
         $('#register-sendmessage').text('重新发送')
+    },
+    //注册ajax请求
+    registerAjax:function(csrf_token,re_content,phone,password,msgcode){
+        $.ajax({
+            url:'/register/',
+            type:'post',
+            dataType:'json',
+            headers:{"X-CSRFtoken":csrf_token},
+            data:{
+                're_content':re_content,
+                'phone':phone,
+                'password':password,
+                'msgcode':msgcode
+            },
+            success:function(data){
+                console.log(data)
+                if(data.code==200){
+                    alert('恭喜注册成功!')
+                    window.location.href='/login/'
+                }else if(data.code==106){
+                //    验证码不正确
+                    $('.register-errmsg-msgcode').css('display','block').text(data.msg);
+                }else if(data.code==108){
+                    //服务器插入用户失败
+                    $('.register-errmsg-msgcode').css('display','block').text(data.msg)
+                }
+            }
+        })
     }
 };
 
@@ -165,21 +193,7 @@ $(function(){
             repassword=sha256_digest(repassword)
 
         //    表单有效，向后端发起ajax请求
-            $.ajax({
-                url:'/register/',
-                type:'post',
-                dataType:'json',
-                headers:{"X-CSRFtoken":csrf_code},
-                data:{
-                    're_content':'user_register',
-                    'phone':rephone,
-                    'password':repassword,
-                    'msgcode':remsgcode
-                },
-                success:function(data){
-                    console.log(data)
-                }
-            })
+            register.registerAjax(csrf_code,'user_register',rephone,repassword,remsgcode)
         }
     });
 
