@@ -150,9 +150,9 @@ $(function(){
         csrf_code=$('#csrftoken').val();
 
         if(FormisValide){
-        //    加密密码
+        //  请求发送前加密密码
             repassword=sha256_digest(repassword)
-            console.log(repassword)
+
         //    表单有效，向后端发起ajax请求
             $.ajax({
                 url:'/register/',
@@ -167,6 +167,7 @@ $(function(){
                 },
                 success:function(data){
                     console.log(data)
+                    console.log(data.code.length)
                 }
             })
         }

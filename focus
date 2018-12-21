@@ -40,3 +40,7 @@ django ajax的post请求 csrftoken问题：
 
             urllib2.urlopen（'目标网址'，context=context）.read()
             这样就解决了ssl：certificate_verify_failed这个问题，成功运行脚本
+
+5.密码加密:
+    前端首先对密码进行sha256加密
+    后端获取加密后的密码，对其进行加盐加密

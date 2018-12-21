@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.http import HttpResponse,HttpResponseRedirect
 import main
 import zhenzismsclient as smsclient
+from django.core.signing import Signer
 # Create your views here.
 
 class Regster_post():
@@ -18,8 +19,6 @@ class Regster_post():
     def valid_code_post(self):
         try:
             client = smsclient.ZhenziSmsClient(self.apiUrl, self.appId, self.appSecret)
-            # shengyu = client.balance()
-            # print('剩余短信:', shengyu)
 
             # 随机生成验证码
             valid_code = main.valid_code()
@@ -69,12 +68,13 @@ class Register_views(View):
         phone=request.POST.get('phone',None)
         # 密码
         passw=request.POST.get('password',None)
-        # 确认密码
-        comfirm_passw=request.POST.get('comfirm_passw',None)
         # 验证码
         msgcode=request.POST.get('msgcode',None)
         # 返回结果
         result=''
+
+        #检测手机号是否已存在
+
 
         # 后端判断手机号是否合法
         is_valid=main.phoneIsValid(phone)
@@ -83,10 +83,13 @@ class Register_views(View):
                 'code': 2,
                 'msg': '手机号不合法'
             }
+            # 密码
+            passw = request.POST.get('password', None)
             return HttpResponse(json.dumps(dic), content_type='application/json')
+
         # 判断请求内容
         if re_content=='msg_code':
-        #     创建register_post请求对象
+            #创建register_post请求对象
             register_post=Regster_post(request,self.apiUrl,self.appId,self.appSecret,phone)
             # 返回短信发送结果
             result=register_post.valid_code_post()
@@ -94,12 +97,16 @@ class Register_views(View):
                 result={'code':1,'data':'发送失败'}
             return HttpResponse(result, content_type='application/json')
         elif re_content=='user_register':
-        #   后端二次验证表单,二次加密
+            #后端二次验证表单,密码二次加密
+            signer=Signer()
+            #二次加密后的密码
+            passw_salt=signer.sign(passw)
 
-            return HttpResponse('ok',content_type='application/json')
+
+            # return HttpResponse(json.dumps(dic),content_type='application/json')
         else:
             dic = {
-                'code': 6,
+                'code': 7,
                 'msg': '参数传递错误'
             }
             return HttpResponse(json.dumps(dic),content_type='application/json')
