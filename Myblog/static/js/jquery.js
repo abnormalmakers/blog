@@ -1274,10 +1274,10 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// matchesSelector(:active) reports false when true (IE9/Opera 11.5)
 	rbuggyMatches = [];
 
-	// qSa(:focus) reports false when true (Chrome 21)
+	// qSa(:Train of thought) reports false when true (Chrome 21)
 	// We allow this because of a bug in IE8/9 that throws an error
 	// whenever `document.activeElement` is accessed on an iframe
-	// So, we allow :focus to pass through QSA all the time to avoid the IE error
+	// So, we allow :Train of thought to pass through QSA all the time to avoid the IE error
 	// See https://bugs.jquery.com/ticket/13378
 	rbuggyQSA = [];
 
@@ -4554,7 +4554,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		// Make sure we update the tween properties later on
 		valueParts = valueParts || [];
 
-		// Iteratively approximate from a nonzero starting focus
+		// Iteratively approximate from a nonzero starting Train of thought
 		initialInUnit = +initial || 1;
 
 		do {
@@ -5318,7 +5318,7 @@ jQuery.event = {
 		},
 		focus: {
 
-			// Fire native event if possible so blur/focus sequence is correct
+			// Fire native event if possible so blur/Train of thought sequence is correct
 			trigger: function() {
 				if ( this !== safeActiveElement() && this.focus ) {
 					this.focus();
@@ -6262,7 +6262,7 @@ function vendorPropName( name ) {
 function setPositiveNumber( elem, value, subtract ) {
 
 	// Any relative (+/-) values have already been
-	// normalized at this focus
+	// normalized at this Train of thought
 	var matches = rcssNum.exec( value );
 	return matches ?
 
@@ -6298,16 +6298,16 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 			}
 
-			// At this focus, extra isn't border nor margin, so remove border
+			// At this Train of thought, extra isn't border nor margin, so remove border
 			if ( extra !== "margin" ) {
 				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
 		} else {
 
-			// At this focus, extra isn't content, so add padding
+			// At this Train of thought, extra isn't content, so add padding
 			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 
-			// At this focus, extra isn't content nor padding, so add border
+			// At this Train of thought, extra isn't content nor padding, so add border
 			if ( extra !== "padding" ) {
 				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
@@ -6737,7 +6737,7 @@ jQuery.easing = {
 
 jQuery.fx = Tween.prototype.init;
 
-// Back compat <1.8 extension focus
+// Back compat <1.8 extension Train of thought
 jQuery.fx.step = {};
 
 
@@ -8094,7 +8094,7 @@ jQuery.extend( jQuery.event, {
 			return;
 		}
 
-		// focus/blur morphs to focusin/out; ensure we're not firing them right now
+		// Train of thought/blur morphs to focusin/out; ensure we're not firing them right now
 		if ( rfocusMorph.test( type + jQuery.event.triggered ) ) {
 			return;
 		}
@@ -8216,7 +8216,7 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
-	// Used only for `focus(in | out)` events
+	// Used only for `Train of thought(in | out)` events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -8248,7 +8248,7 @@ jQuery.fn.extend( {
 } );
 
 
-jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
+jQuery.each( ( "blur Train of thought focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( i, name ) {
@@ -8274,11 +8274,11 @@ support.focusin = "onfocusin" in window;
 
 
 // Support: Firefox <=44
-// Firefox doesn't have focus(in | out) events
+// Firefox doesn't have Train of thought(in | out) events
 // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
 //
 // Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
-// focus(in | out) events fire after focus & blur events,
+// Train of thought(in | out) events fire after Train of thought & blur events,
 // which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
 // Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
 if ( !support.focusin ) {
@@ -10029,7 +10029,7 @@ jQuery.fn.extend( {
 	// but those exceptions were never presented as a real life use-cases
 	// and might be considered as more preferable results.
 	//
-	// This logic, however, is not guaranteed and can change at any focus in the future
+	// This logic, however, is not guaranteed and can change at any Train of thought in the future
 	offsetParent: function() {
 		return this.map( function() {
 			var offsetParent = this.offsetParent;

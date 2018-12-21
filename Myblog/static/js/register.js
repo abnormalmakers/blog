@@ -7,7 +7,6 @@ var register={
     // 参数为表单信息
     // 返回布尔值
     checkForm:function(phone,passw,confirmpassw,msgcode){
-        console.log(passw.length)
         $('.register-errmsg').css('display','none')
         if(!phone){
             //手机号为空
@@ -71,11 +70,24 @@ var register={
                 console.log(data)
                 if(data.code==0){
                     console.log('短信发送成功')
-                }else{
-                    console.log("短信发送失败")
+                }else if(data.code==103){
+                    $('.register-errmsg-phone').css('display','block').text(data.msg);
+                    register.sendMsgErr()
+                }else if(data.code==101){
+                    $('.register-errmsg-msgcode').css('display','block').text(data.msg);
+                     register.sendMsgErr()
                 }
             }
         })
+    },
+    //发送验证码错误处理
+    sendMsgErr:function(){
+        //    清除定时器
+        clearInterval(register.timer)
+        //    关闭遮罩
+        $('#register-sendemail-model').css('display','none')
+        //    重新发送
+        $('#register-sendmessage').text('重新发送')
     }
 };
 
@@ -144,7 +156,6 @@ $(function(){
         remsgcode=$('#register-msgcode').val();
         //验证表单是否有效，返回布尔值
         FormisValide=register.checkForm(rephone,repassword,reconfirmpassword,remsgcode);
-        console.log(FormisValide)
 
         //获取csrftoken码
         csrf_code=$('#csrftoken').val();
@@ -167,7 +178,6 @@ $(function(){
                 },
                 success:function(data){
                     console.log(data)
-                    console.log(data.code.length)
                 }
             })
         }
