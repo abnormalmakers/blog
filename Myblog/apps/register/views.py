@@ -50,9 +50,12 @@ class Regster_post():
 
 class Register_views(View):
     # 短信验证码参数
-    apiUrl = "https://sms_developer.zhenzikj.com"
-    appId = 100340
-    appSecret = '482bff9b-a65f-451f-89d7-66f7b317dde3'
+    __apiUrl = "https://sms_developer.zhenzikj.com"
+    __appId = 100340
+    __appSecret = '482bff9b-a65f-451f-89d7-66f7b317dde3'
+
+    # 返回结果
+    __result=''
 
     def get(self,request):
         valid_code=request.session.get('valid_code',None)
@@ -70,8 +73,6 @@ class Register_views(View):
         passw=request.POST.get('password',None)
         # 验证码
         msgcode=request.POST.get('msgcode',None)
-        # 返回结果
-        result=''
 
         #检测手机号是否已存在
 
@@ -83,20 +84,22 @@ class Register_views(View):
                 'code': 2,
                 'msg': '手机号不合法'
             }
-            # 密码
-            passw = request.POST.get('password', None)
             return HttpResponse(json.dumps(dic), content_type='application/json')
 
         # 判断请求内容
         if re_content=='msg_code':
-            #创建register_post请求对象
-            register_post=Regster_post(request,self.apiUrl,self.appId,self.appSecret,phone)
+            #发送验证码请求
+
+            # 创建register_post请求对象
+            register_post=Regster_post(request,self.__apiUrl,self.__appId,self.__appSecret,phone)
             # 返回短信发送结果
-            result=register_post.valid_code_post()
-            if not result:
-                result={'code':1,'data':'发送失败'}
-            return HttpResponse(result, content_type='application/json')
+            self.__result=register_post.valid_code_post()
+            if not self.__result:
+                self.__result={'code':1,'data':'发送失败'}
+            return HttpResponse(self.__result, content_type='application/json')
         elif re_content=='user_register':
+            # 用户注册请求
+
             #后端二次验证表单,密码二次加密
             signer=Signer()
             #二次加密后的密码
