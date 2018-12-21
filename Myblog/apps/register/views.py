@@ -1,10 +1,12 @@
-import json
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.http import HttpResponse,HttpResponseRedirect
+from django.core.signing import Signer
+from .models import Users
 import main
 import zhenzismsclient as smsclient
-from django.core.signing import Signer
+import json
+
 # Create your views here.
 
 class Regster_post():
@@ -57,6 +59,7 @@ class Register_views(View):
     # 返回结果
     __result=''
 
+
     def get(self,request):
         valid_code=request.session.get('valid_code',None)
         print("当前验证码valid_code:",valid_code)
@@ -75,6 +78,11 @@ class Register_views(View):
         msgcode=request.POST.get('msgcode',None)
 
         #检测手机号是否已存在
+        isRegistered=self.phoneIsRepeat(phone)
+        if isRegistered:
+            dic = {'code': 3, 'msg': "手机号已存在"}
+            return HttpResponse(json.dumps(dic), content_type='application/json')
+
 
 
         # 后端判断手机号是否合法
@@ -114,4 +122,11 @@ class Register_views(View):
             }
             return HttpResponse(json.dumps(dic),content_type='application/json')
 
-
+    @staticmethod
+    def phoneIsRepeat(phone):
+        # 判断手机号是否已存在
+        isActive = Users.objects.filter(phone=phone)
+        if isActive:
+            return True
+        else:
+            return False
