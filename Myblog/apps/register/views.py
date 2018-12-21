@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse
 from django.core.signing import Signer
 from .models import Users
 import zhenzismsclient as smsclient
@@ -26,6 +26,7 @@ class Send_msgcode():
         # 验证手机号是否存在
         isRegistered = self.phoneIsRepeat(self.phone)
         if isRegistered:
+            # 如果存在，返回失败发送结果
             self.__result = {'code': 103, 'msg': "手机号已存在"}
             return self.__result
         try:
@@ -44,10 +45,12 @@ class Send_msgcode():
             if self.__result['code'] == 0:
                 print('存放session')
                 self.request.session['valid_code'] = valid_code
-                self.request.session.set_expiry(2*60)
+                self.request.session.set_expiry(5*60)
+            # 返回验证码发送成功结果
             return self.__result
         except Exception as e:
             print(e)
+            # 返回验证码发送失败结果
             self.__result={'code':101,'data':'验证码发送失败'}
             return self.__result
 
@@ -81,7 +84,6 @@ class Register_views(View):
     def get(self,request):
         valid_code=request.session.get('valid_code',None)
         print("当前验证码valid_code:",valid_code)
-
         return render(request,'register.html',locals())
 
     def post(self,request):
@@ -135,7 +137,7 @@ class Register_views(View):
                     dic = {'code': 200, 'msg': '插入用户成功'}
                     return HttpResponse(json.dumps(dic), content_type='application/json')
                 except Exception as e:
-                    dic={'code':108,'msg':'插入用户失败'}
+                    dic={'code':108,'msg':'注册用户失败，请重新发送'}
                     return HttpResponse(json.dumps(dic),content_type='application/json')
             else:
                 dic = {'code': 106, 'msg': '验证码不正确'}
