@@ -6,6 +6,8 @@ from .models import Users
 import main
 import zhenzismsclient as smsclient
 import json
+import re
+import random
 
 # Create your views here.
 
@@ -23,7 +25,7 @@ class Regster_post():
             client = smsclient.ZhenziSmsClient(self.apiUrl, self.appId, self.appSecret)
 
             # 随机生成验证码
-            valid_code = main.valid_code()
+            valid_code = self.generate_valid_code()
             print(valid_code)
 
             # 发送验证码并获取返回结果
@@ -44,6 +46,15 @@ class Regster_post():
     # 注册请求
     def register_post(self):
         pass
+
+    @staticmethod
+    # 随机生成6位数验证码
+    def generate_valid_code():
+        arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        s = ''
+        for i in range(6):
+            s += random.choice(arr)
+        return s
 
 
 
@@ -85,8 +96,8 @@ class Register_views(View):
 
 
 
-        # 后端判断手机号是否合法
-        is_valid=main.phoneIsValid(phone)
+        # 后端二次验证手机号是否合法
+        is_valid=self.phoneIsValid(phone)
         if not is_valid:
             dic = {
                 'code': 2,
@@ -130,3 +141,14 @@ class Register_views(View):
             return True
         else:
             return False
+
+    # 后端手机号验证合法性
+    @staticmethod
+    def phoneIsValid(tel):
+        ret = re.match(r"^1[35678]\d{9}$", tel)
+        if ret:
+            return True
+        else:
+            return False
+
+
