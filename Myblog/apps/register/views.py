@@ -10,7 +10,10 @@ import random
 
 # Create your views here.
 
-class Regster_post():
+class Send_msgcode():
+    # 初始化验证码发送返回结果
+    __result=''
+
     def __init__(self,request,apiUrl,appId,appSecret,phone):
         self.request=request
         self.apiUrl=apiUrl
@@ -20,6 +23,11 @@ class Regster_post():
 
     # 发送验证码请求
     def valid_code_post(self):
+        # 验证手机号是否存在
+        isRegistered = self.phoneIsRepeat(self.phone)
+        if isRegistered:
+            self.__result = {'code': 103, 'msg': "手机号已存在"}
+            return self.__result
         try:
             client = smsclient.ZhenziSmsClient(self.apiUrl, self.appId, self.appSecret)
 
@@ -28,24 +36,20 @@ class Regster_post():
             print(valid_code)
 
             # 发送验证码并获取返回结果
-            result = client.send(self.phone, '您的验证码是%s，请在5分钟内输入'%valid_code)
+            self.__result = client.send(self.phone, '您的验证码是%s，请在5分钟内输入'%valid_code)
 
             # 验证码发送成功 ，将验证码存入session
-            result = json.loads(result)
-            print('验证码发送code:',result['code'])
-            if result['code'] == 0:
+            self.__result = json.loads(self.__result)
+            print('验证码发送code:',self.__result['code'])
+            if self.__result['code'] == 0:
                 print('存放session')
                 self.request.session['valid_code'] = valid_code
                 self.request.session.set_expiry(2*60)
-            return json.dumps(result)
+            return self.__result
         except Exception as e:
             print(e)
-            return False
-
-    # 注册请求
-    def register_post(self):
-        pass
-
+            self.__result={'code':101,'data':'验证码发送失败'}
+            return self.__result
 
     # 随机生成6位数验证码
     @staticmethod
@@ -56,9 +60,14 @@ class Regster_post():
             s += random.choice(arr)
         return s
 
-
-
-
+    @staticmethod
+    def phoneIsRepeat(phone):
+        # 判断手机号是否已存在
+        isActive = Users.objects.filter(phone=phone)
+        if isActive:
+            return True
+        else:
+            return False
 
 
 class Register_views(View):
@@ -66,10 +75,8 @@ class Register_views(View):
     __apiUrl = "https://sms_developer.zhenzikj.com"
     __appId = 100340
     __appSecret = '482bff9b-a65f-451f-89d7-66f7b317dde3'
-
     # 返回结果
     __result=''
-
 
     def get(self,request):
         valid_code=request.session.get('valid_code',None)
@@ -107,12 +114,11 @@ class Register_views(View):
         if re_content=='msg_code':
             #发送验证码请求
             # 创建register_post请求对象
-            register_post=Regster_post(request,self.__apiUrl,self.__appId,self.__appSecret,phone)
+            register_post=Send_msgcode(request,self.__apiUrl,self.__appId,self.__appSecret,phone)
             # 返回短信发送结果
             self.__result=register_post.valid_code_post()
-            if not self.__result:
-                self.__result={'code':101,'data':'验证码发送失败'}
-            return HttpResponse(self.__result, content_type='application/json')
+            print(self.__result)
+            return HttpResponse(json.dumps(self.__result), content_type='application/json')
         elif re_content=='user_register':
             # 用户注册请求
             # 检测验证码是否正确且未失效
@@ -134,7 +140,6 @@ class Register_views(View):
             else:
                 dic = {'code': 106, 'msg': '验证码不正确'}
                 return HttpResponse(json.dumps(dic), content_type='application/json')
-
         else:
             dic = {
                 'code': 107,
