@@ -8,10 +8,9 @@
     <link rel="stylesheet" href="{%static 'css/base.min.css'%}">
     <link rel="stylesheet" href="{%static 'css/main.min.css'%}">
     <link rel="stylesheet" href="{%static 'css/headers.css'%}">
+    <link rel="stylesheet" href="{%static 'css/common.css'%}">
     <style>
-        body{
-            padding-top: 0;
-        }
+
         #loginForm{
             margin:auto
         }
@@ -21,12 +20,14 @@
             padding: 5px 0 0 5px;
             display: none;
         }
+
     </style>
 </head>
 <body>
 <header>{%include 'login_headers.html'%}</header>
 <section id="container">
-    <div class="sign-page bg-img" style="background-image: url({%static 'img/banner2.jpg'%});">
+    <!--<div class="sign-page bg-img" style="background-image: url({%static 'img/banner2.jpg'%});">-->
+        <div class="sign-page bg-img" style="background-color:#35395d;">
         <div class="login-form">
             <h3 class="ta-c">登录账户</h3>
             <div class="form" id="loginForm">
