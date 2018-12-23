@@ -23,5 +23,5 @@ urlpatterns = [
 urlpatterns+= [
     url(r'^login/',include('login.urls')),
     url(r'^register/',include('register.urls')),
-    url(r'personal/',include('personal.urls'))
+    url(r'^personal/',include('personal.urls'))
 ]
