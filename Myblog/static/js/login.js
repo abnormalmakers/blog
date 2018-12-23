@@ -59,12 +59,12 @@ $(function(){
     //登录页面金庸浏览器回退功能
     if(window.history&&window.history.pushState){
         $(window).on('popstate',function(){
-            window.history.pushState('forward',null,'#')
-            window.history.forward(1)
+            window.history.pushState('forward',null,'#');
+            window.history.forward(1);
         })
     }
-    window.history.pushState('forward',null,'#')
-    window.history.forward(1)
+    window.history.pushState('forward',null,'#');
+    window.history.forward(1);
     $("#login-submit").on('click',function(){
         //获取表单数据
         phone=$('#login-account').val();
