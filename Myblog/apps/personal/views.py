@@ -5,7 +5,7 @@ from django.views.generic.base import View
 
 class Personal_view(View):
     def get(self,request):
-        pass
+        return render(request,'personal.html',locals())
 
     def post(self,request):
         pass
