@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'register',
-    'personal'
+    'personal',
+    'common'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS=(BASE_DIR,'static')
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 
