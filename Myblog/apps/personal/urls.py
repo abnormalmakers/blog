@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from .views import *
+from .views import Personal_view
 
 urlpatterns=[
-    url(r'^personal/',Personal_view.as_view(),name='personal')
+    url(r'',Personal_view.as_view(),name='personal')
 ]
