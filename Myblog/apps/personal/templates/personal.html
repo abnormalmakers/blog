@@ -1,11 +1,27 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{%static 'css/layui.css'%}">
+    <link rel="stylesheet" href="{%static 'css/base.min.css'%}">
+    <link rel="stylesheet" href="{%static 'css/main.min.css'%}">
+    <link rel="stylesheet" href="{%static 'css/headers.css'%}">
+    <style>
+        body{
+            padding-top: 0;
+        }
+    </style>
 </head>
 <body>
+<header>
+    {%include 'headers.html' with phoneid=phone%}
+</header>
+<section>
     it is personal {{phone}}
     <a href="/login/logout/">退出登录</a>
+</section>
+
 </body>
 </html>
