@@ -10,6 +10,12 @@
         #loginForm{
             margin:auto
         }
+        .login-errmsg{
+            color: red;
+            font-size: 9px;
+            padding: 5px 0 0 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -19,25 +25,19 @@
             <h3 class="ta-c">登录账户</h3>
             <div class="form" id="loginForm">
                 <div class="row clearfix">
-                    <input type="text" id="login-account" placeholder="邮箱/手机号码" class="input-1">
+                    <input type="text" id="login-account" placeholder="手机号码" class="input-1">
+                    <p class="login-errmsg login-errmsg-phone">手机号不能为空</p>
                 </div>
                 <div class="row clearfix">
                     <input type="password" id="login-password" placeholder="密码" class="input-1">
+                    <p class="login-errmsg login-errmsg-passw">密码不能为空</p>
                 </div>
-                <!--<div class="row grow clearfix">-->
-                    <!--<div class="col8-tn-5">-->
-                        <!--<input type="text" id="reset-imgcode" placeholder="验证码" class="input-1">-->
-                    <!--</div>-->
-                    <!--<div class="col8-tn-3 no-pl">-->
-                        <!--<img class="input-1 no-pl no-pr btn-imgcode" src="/servlet/ValidateImageServlet?r=1545230248591">-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="row row-link clearfix">
                     <span id="login-errortips" class="color-f5322d"></span>
                 </div>
-                <div class="row row-link clearfix">
-                    <a href="/validate/reset.html" class="fr">忘记密码？</a>
-                </div>
+                <!--<div class="row row-link clearfix">-->
+                    <!--<a href="/validate/reset.html" class="fr">忘记密码？</a>-->
+                <!--</div>-->
                 <div class="row clearfix">
                     <button type="submit" class="wp100 submit btn btn-2" id="login-submit">登录</button>
                     <a class="wp100 btn btn-12" href="{%url 'register'%}"><span>没有账号，立即<em>注册</em></span></a>
@@ -46,5 +46,9 @@
         </div>
     </div>
 </section>
+<input type="hidden" value="{{csrf_token}}" id="csrftoken">
 </body>
+<script src="{%static 'js/jquery.js'%}"></script>
+<script src="{%static 'js/sha256.js'%}"></script>
+<script src="{%static 'js/login.js'%}"></script>
 </html>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.core.signing import Signer
 from .models import Users
 import zhenzismsclient as smsclient
@@ -43,7 +43,6 @@ class Send_msgcode():
             self.__result = json.loads(self.__result)
             print('验证码发送code:',self.__result['code'])
             if self.__result['code'] == 0:
-                print('存放session')
                 self.request.session['valid_code'] = valid_code
                 self.request.session.set_expiry(5*60)
             # 返回验证码发送成功结果
@@ -82,9 +81,19 @@ class Register_views(View):
     __result=''
 
     def get(self,request):
-        valid_code=request.session.get('valid_code',None)
-        print("当前验证码valid_code:",valid_code)
-        return render(request,'register.html',locals())
+        valid_code = request.session.get('valid_code', None)
+        print("当前验证码valid_code:", valid_code)
+        phone=request.session.get('phone','')
+        if phone:
+            return HttpResponseRedirect('/personal/')
+        elif request.COOKIES.get('phone',''):
+                phone= request.COOKIES.get('phone')
+                request.session['phone']=phone
+                request.session.set_expiry(20)
+                return HttpResponseRedirect('/personal/')
+        else:
+            return render(request, 'register.html', locals())
+
 
     def post(self,request):
         # 判断 是注册请求还是发送验证码
