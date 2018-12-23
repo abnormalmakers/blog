@@ -18,7 +18,7 @@ class Login_view(View):
         elif request.COOKIES.get('phone',''):
                 phone= request.COOKIES.get('phone')
                 request.session['phone']=phone
-                request.session.set_expiry(20)
+                request.session.set_expiry(60*60*24)
                 return HttpResponseRedirect('/personal/')
         else:
             return render(request, 'login.html', locals())
@@ -35,7 +35,7 @@ class Login_view(View):
                 # 添加session
                 if self.__result:
                     request.session['phone']=phone
-                    request.session.set_expiry(20)
+                    request.session.set_expiry(60*60*24)
                     dic={'code':200,'msg':'登陆成功'}
                     return HttpResponse(json.dumps(dic),content_type='application/json')
                 else:

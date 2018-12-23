@@ -13,7 +13,7 @@ class Personal_view(View):
             phone=request.COOKIES.get('phone','')
             if phone:
                 request.session['phone']=phone
-                request.session.set_epiry(20)
+                request.session.set_epiry(60*60*24)
                 return render(request, 'personal.html', locals())
         else:
             return HttpResponseRedirect('/login/')

@@ -89,7 +89,7 @@ class Register_views(View):
         elif request.COOKIES.get('phone',''):
                 phone= request.COOKIES.get('phone')
                 request.session['phone']=phone
-                request.session.set_expiry(20)
+                request.session.set_expiry(60*60*24)
                 return HttpResponseRedirect('/personal/')
         else:
             return render(request, 'register.html', locals())
