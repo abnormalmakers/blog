@@ -4,11 +4,11 @@ users:
 
 
 ariticle
-    ariticle_id         title               tag            content            date
+    ariticle_id         user_id             title               tag                 content            date
 
 
 img
-    img_id               img
+    img_id              ariticle_id        img
 
 
 comments
