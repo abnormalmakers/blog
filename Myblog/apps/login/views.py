@@ -31,15 +31,20 @@ class Login_view(View):
         pass_salt=signer.sign(password)
         if phone and password:
             try:
-                self.__result=Users.objects.filter(phone=phone,password=pass_salt)
-                # 添加session
-                if self.__result:
-                    request.session['phone']=phone
-                    request.session.set_expiry(60*60*24)
-                    dic={'code':200,'msg':'登陆成功'}
-                    return HttpResponse(json.dumps(dic),content_type='application/json')
+                isRegisterPhone=Users.objects.filter(phone=phone)
+                if isRegisterPhone:
+                    self.__result=Users.objects.filter(phone=phone,password=pass_salt)
+                    # 添加session
+                    if self.__result:
+                        request.session['phone']=phone
+                        request.session.set_expiry(60*60*24)
+                        dic={'code':200,'msg':'登陆成功'}
+                        return HttpResponse(json.dumps(dic),content_type='application/json')
+                    else:
+                        dic={'code': 113, 'msg': '密码错误'}
+                        return HttpResponse(json.dumps(dic), content_type='application/json')
                 else:
-                    dic={'code': 113, 'msg': '密码错误'}
+                    dic = {'code': 112, 'msg': '手机号未注册'}
                     return HttpResponse(json.dumps(dic), content_type='application/json')
             except Exception as e:
                 print(e)

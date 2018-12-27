@@ -104,9 +104,11 @@ var register={
             },
             success:function(data){
                 console.log(data)
-                if(data.code==200){
-                    alert('恭喜注册成功!')
-                    window.location.href='/login/'
+                if(data.code==200) {
+                    alertTip.registertips()
+                }else if(data.code==103){
+                    //手机号已存在
+                    $('.register-errmsg-phone').css('display','block').text(data.msg);
                 }else if(data.code==106){
                 //    验证码不正确
                     $('.register-errmsg-msgcode').css('display','block').text(data.msg);

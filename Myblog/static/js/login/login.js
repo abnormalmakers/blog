@@ -44,13 +44,25 @@ var login={
                 'password':repassword
             },
             success:function(data){
-                if(data.code==200){
+                if(data.code==200) {
                     console.log('登陆成功')
-                    window.location.href='/personal/'
+                    window.location.href = '/personal/'
+                }else if(data.code==111){
+                    //手机号或密码为空
+                    $('.login-errmsg-phone').css('display','block').text(data.msg);
+                }else if(data.code==112){
+                    //手机号未注册
+                    $('.login-errmsg-phone').css('display','block').text(data.msg);
                 }else if(data.code==113){
-                    $('.login-errmsg-passw').css('display','block').text('密码错误');
+                    //密码错误
+                    $('.login-errmsg-passw').css('display','block').text(data.msg);
+                }else if(data.code==114){
+                    //数据异常
+                    $('.login-errmsg-passw').css('display','block').text(data.msg);
+                }else{
+                    //服务器未响应
+                    $('.login-errmsg-passw').css('display','block').text('服务器未响应');
                 }
-
             }
         })
     }
