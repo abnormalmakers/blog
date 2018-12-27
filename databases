@@ -1,0 +1,24 @@
+users:
+    id                  phone               password            is_active
+    primary key
+
+
+ariticle
+    ariticle_id         title               tag            content            date
+
+
+img
+    img_id               img
+
+
+comments
+    comment_id           user_id            ariticle_id         comments
+
+
+关系：
+    用户  一对多     文章
+    用户  一对多     评论
+
+    文章  一对多     评论
+    文章  一对多     图片
+
