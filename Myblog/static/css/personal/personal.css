@@ -75,3 +75,16 @@ section{
     clear: both;
     *zoom:1
 }
+
+/*list 分页按钮*/
+.main .main_left_wrapper .tab_pagination{
+    padding: 20px 0;
+    text-align: center;
+}
+.main .main_left_wrapper .page-links:after{
+    content:"";
+    display: block;
+    clear:both;
+}
+
+
