@@ -47,3 +47,8 @@ django ajax的post请求 csrftoken问题：
 
 
 6.二次验证：密码，手机号，表单
+
+
+7.personal
+    博客list页面使用分页
+    博客详情页使用ajax动态加载详情
