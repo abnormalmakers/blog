@@ -20,6 +20,7 @@ section{
     padding:10px;
 }
 
+/*personal  左半部分*/
 /*一条list*/
 .main .tab_page_list{
     padding-top: 10px;
@@ -86,5 +87,31 @@ section{
     display: block;
     clear:both;
 }
+
+
+
+/*personal  右半部分*/
+.main .main_right .tag_class,.main .main_right .friend_link{
+    padding:20px 10px;
+}
+.main .main_right h6{
+    padding:4px;
+    color:#3D3D3D;
+}
+.main .main_right .tag_class .article_tag_list li{
+    padding:4px 15px;
+    cursor:pointer;
+    font-size: 13px;
+    color:#999;
+}
+.main .main_right .tag_class .article_tag_list li:hover,.main .main_right .friend_link p a:hover{
+    color: red;
+}
+.main .main_right .friend_link p{
+    padding:5px 15px;
+    font-size: 13px;
+    color:#999;
+}
+
 
 
