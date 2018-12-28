@@ -1,14 +1,18 @@
 users:
-    id                  phone               password            is_active
+    id                  phone               password            is_active           follow
     primary key
 
 
 ariticle
-    ariticle_id         user_id             title               tag                 content            date
+    ariticle_id         user_id             title                content            date
+
+
+tag
+    tag_id              tag
 
 
 img
-    img_id              ariticle_id        img
+    img_id              ariticle_id         img
 
 
 comments
@@ -21,4 +25,6 @@ comments
 
     文章  一对多     评论
     文章  一对多     图片
+    文章  一对多     标签
+
 
