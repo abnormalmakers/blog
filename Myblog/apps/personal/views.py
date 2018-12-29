@@ -20,3 +20,15 @@ class Personal_view(View):
 
     def post(self,request):
         pass
+
+
+class Blogdetails_view(View):
+    def get(self,request):
+        return render(request,'blogdetails.html',locals())
+
+    def post(self,request):
+        pass
+
+
+
+
