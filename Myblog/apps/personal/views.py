@@ -23,8 +23,16 @@ class Personal_view(View):
 
 
 class Blogdetails_view(View):
-    def get(self,request):
-        return render(request,'blogdetails.html',locals())
+    def get(self,request,num):
+        phone=request.session.get('phone','')
+        if phone:
+            return render(request,'blogdetails.html',locals())
+        else:
+            if request.COOKIES['phone']:
+                request.session['phone']=phone
+                request.session.set_epiry(60*60*24)
+                return render(request, 'blogdetails.html', locals())
+            return HttpResponseRedirect('/login/')
 
     def post(self,request):
         pass

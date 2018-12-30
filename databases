@@ -1,23 +1,28 @@
 users:
-    id                  phone               password            is_active           follow
+    id                  phone               password            is_active
     primary key
-
+    int                 charfield           charfield           booleanField
+    用户id              用户手机号           用户密码            是否激活
 
 ariticle
     ariticle_id         user_id             title                content            date        is_draf
-
+    primary key         IntegerField        Charfiled                               timestamp   booleanField
+    文章id              作者id              文章标题              文章内容           发表日期     是否为草噶
 
 tag
     tag_id              tag
-
+    primary key
+    标签id              标签
 
 img
     img_id              ariticle_id         img
+    图片id              文章id              图片
 
 
 comments
     comment_id           user_id            ariticle_id         comments
-
+    primary key
+    评论id               用户id            文章id                评论
 
 关系：
     用户  一对多     文章
