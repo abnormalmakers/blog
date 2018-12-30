@@ -1,18 +1,25 @@
 {%load static%}
+
 <div class="layui-header">
     <div class="layui-logo">
         <img src="{%static 'img/logo.png'%}" alt="">
     </div>
     <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item">
-        <a href="javascript:;">
-          {{phoneid}}
-        <span class="layui-nav-more"></span></a>
-        <dl class="layui-nav-child">
-          <dd><a href="javascript:void(0)" class="update-pwd-btn">修改密码</a></dd>
-        </dl>
-      </li>
-      <li class="layui-nav-item"><a href="/login/logout/" class="loginout-btn">退了</a></li>
+        <li class="layui-nav-item">
+            <!--<span class="write_blog_png"></span>-->
+            <a href="#" class="write_blog">写博客</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+            {{phoneid}}
+            <span class="layui-nav-more"></span></a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:void(0)" class="update-pwd-btn">修改密码</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/login/logout/" class="loginout-btn">退了</a>
+        </li>
         <span class="layui-nav-bar"></span>
     </ul>
 </div>

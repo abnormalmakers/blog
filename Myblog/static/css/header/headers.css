@@ -3,3 +3,17 @@
     margin-left: 40px;
     float: left;
 }
+a.write_blog{
+    float: left;
+    padding-left: 30px !important;
+    background: url('../../img/common/writeblog.png') no-repeat 0px 18px;
+}
+.write_blog_png{
+    display: block;
+    width: 26px;
+    height: 24px;
+    line-height: 24px;
+    background-image: url('../../img/common/writeblog.png');
+    margin-top: 17px;
+    float: left;
+}
