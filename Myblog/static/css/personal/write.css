@@ -1,0 +1,16 @@
+.main_wrapper{
+    padding: 20px;
+    margin:0 auto;
+}
+.main_wrapper .blog_publish{
+    float: right;
+}
+.main_wrapper .blog_title{
+    margin: 10px 0;
+}
+.main_wrapper .blog_content{
+    margin:0 0 10px;
+}
+#w_content{
+    width: 100%;
+}

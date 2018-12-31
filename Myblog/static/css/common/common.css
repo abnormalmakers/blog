@@ -41,3 +41,16 @@ body{
     padding: 5px 0 0 5px;
     display: none;
 }
+
+body{
+    background: #f5f6f7;
+}
+section{
+    padding-top: 10px;
+}
+
+.main_wrapper{
+    background: #fff;
+    padding:0 30px 40px;
+    min-height: 650px;
+}

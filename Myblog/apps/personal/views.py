@@ -40,3 +40,14 @@ class Blogdetails_view(View):
 
 
 
+class WriteBlog_view(View):
+    def get(self,request):
+        phone = request.session.get('phone', '')
+        if phone:
+            return render(request, 'writeblog.html', locals())
+        else:
+            if request.COOKIES['phone']:
+                request.session['phone'] = phone
+                request.session.set_epiry(60 * 60 * 24)
+                return render(request, 'writeblog.html', locals())
+            return HttpResponseRedirect('/write/')
