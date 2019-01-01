@@ -8,9 +8,32 @@
 .main_wrapper .blog_title{
     margin: 10px 0;
 }
+.main_wrapper .blog_tag{
+    margin: 0 0 10px;
+}
 .main_wrapper .blog_content{
     margin:0 0 10px;
 }
+.main_wrapper .show_tag{
+    display:inline-block;
+    margin-left: 10px;
+}
+.main_wrapper .show_tag li{
+    display:inline-block;
+    padding:3px 4px;
+    border-radius: 4px;
+    background: palegreen;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+.main_wrapper .choice_tag{
+    width: auto;
+    padding: 3px 10px;
+    display: inline-block;
+
+}
+
 #w_content{
     width: 100%;
 }

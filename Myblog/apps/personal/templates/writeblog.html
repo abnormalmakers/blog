@@ -21,11 +21,28 @@
                 <div class="blog_title">
                     <input type="text" id='blog_title' name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
                 </div>
-
+                <div class="blog_tag">
+                    <div class="layui-input-inline">
+                        <label>请选择博客标签：</label>
+                        <select name="quiz3" class="choice_tag">
+                            <option value="">请选择</option>
+                            <option value="c">C</option>
+                            <option value="c++">C++</option>
+                            <option value="java">Java</option>
+                            <option value="python">Python</option>
+                            <option value="php">PHP</option>
+                            <option value="javascript">Javascript</option>
+                            <option value="h5">H5</option>
+                            <option value="css3">Css3</option>
+                        </select>
+                    </div>
+                    <ul class="show_tag">
+                        <!--<li title="点击去掉此标签">123</li>-->
+                    </ul>
+                </div>
                 <div class="blog_content">
                     <textarea id="blog_content" name="" required lay-verify="required" placeholder="请输入" class="layui-textarea" rows="25"></textarea>
                 </div>
-
                 <ul>
                     <li class="blog_publish">
                         <a class="layui-btn layui-btn-warm" id="blog_publish">发布</a>
