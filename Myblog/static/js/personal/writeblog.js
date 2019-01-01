@@ -1,40 +1,53 @@
 var writeblog={
     tag_arr:[],
 //    页面表单验证
+//    1 博客标题为空      2 博客内容为空    3验证成功
     checkForm:function(){
+        $(".error_tips").css('display','none');
         title=$('#blog_title').val();
         content=$('#blog_content').val();
-        if(title&&content){
-            return true
-        }else{
-            return false
+        if(!title){
+            $(".title_error").css('display','block');
+            return 1
+        }else if(!content){
+            $(".content_error").css('display','block');
+            return 2
+        }else if(title&&content){
+            return 3
         }
-    }
-};
+    },
 
-$(function(){
-    //发表博客
-    $("#blog_publish").on('click',function(){
+//    发布博客ajax请求
+    blogpublish_ajax:function(csrftoken,title,content){
         is_valid=writeblog.checkForm();
-        if(is_valid){
+        if(is_valid==3){
             $.ajax({
                 type:'post',
                 url:'/personal/write/',
                 dateType:"json",
-                headers:{'X-CSRFtoken':$('#csrftoken').val()},
+                traditional:true,
+                headers:{'X-CSRFtoken':csrftoken},
                 data:{
-                    'title':$('#blog_title').val(),
+                    'title':title,
                     'tag':writeblog.tag_arr,
-                    'content':$('#blog_content').val()
+                    'content':content
                 },
                 success:function(data){
                     console.log(data)
                 }
             })
-        }else{
-
         }
+    }
 
+};
+
+$(function(){
+    //发表博客
+    $("#blog_publish").on('click',function(){
+        csrftoken=$('#csrftoken').val();
+        title=$('#blog_title').val();
+        content=$('#blog_content').val();
+        writeblog.blogpublish_ajax(csrftoken,title,content)
     });
 
 //    选择博客标签
@@ -54,8 +67,4 @@ $(function(){
         writeblog.tag_arr.splice(index,1);
         $(this).remove();
     })
-
-
-
-
 });
