@@ -57,7 +57,9 @@ class WriteBlog_view(View):
 
     def post(self,request):
         try:
+            print(request.POST)
             title=request.POST.get('title','')
+            tag=request.POST.getlist('tag','')
             content = request.POST.get('content', '')
             # 验证博客提交
             if not title:
@@ -66,6 +68,10 @@ class WriteBlog_view(View):
             elif not content:
                 dic = {'code': 122, 'msg': '博客内容不能为空'}
                 return HttpResponse(json.dumps(dic), content_type='application/json')
+
+            dic={'code':200,'msg':'发布成功'}
+            return HttpResponse(json.dumps(dic),content_type='application/json')
+
 
         except Exception as e:
             print(e)

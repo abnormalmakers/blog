@@ -21,6 +21,7 @@
                 <div class="blog_title">
                     <input type="text" id='blog_title' name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
                 </div>
+                <p class="error_tips title_error">博客标题不能为空</p>
                 <div class="blog_tag">
                     <div class="layui-input-inline">
                         <label>请选择博客标签：</label>
@@ -43,7 +44,8 @@
                 <div class="blog_content">
                     <textarea id="blog_content" name="" required lay-verify="required" placeholder="请输入" class="layui-textarea" rows="25"></textarea>
                 </div>
-                <ul>
+                <p class="error_tips content_error">博客内容不能为空</p>
+                <ul class="write_bottom">
                     <li class="blog_publish">
                         <a class="layui-btn layui-btn-warm" id="blog_publish">发布</a>
                     </li>
