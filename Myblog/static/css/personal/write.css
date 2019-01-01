@@ -26,6 +26,9 @@
     color: #fff;
     position: relative;
     cursor: pointer;
+    margin-right: 5px;
+    min-width:35px;
+    text-align: center;
 }
 .main_wrapper .choice_tag{
     width: auto;
