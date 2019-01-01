@@ -52,3 +52,6 @@ django ajax的post请求 csrftoken问题：
 7.personal
     博客list页面使用分页
     博客详情页使用ajax动态加载详情
+
+
+8.写博客 弹窗 or 页面？
