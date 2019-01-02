@@ -24,8 +24,27 @@ var alertTip={
             content:"<div style='text-align:center'>博客发布失败</div>",
             closeBtn:0,
             btnAlign:'c',
-            time:5000,
+            time:3000,
             timer:null
+        });
+    },
+    successTips:function(){
+        layer.open({
+            title:"",
+            content:"<div style='text-align:center'>博客发布成功</div>",
+            closeBtn:0,
+            btnAlign:'c',
+            time:3000,
+            timer:null,
+            yes:function(){
+                window.location.href='/personal/'
+            },
+            success:function(){
+                clearInterval(this.timer);
+                this.timer=setInterval(function(){
+                    window.location.href='/personal/'
+                },this.time)
+            }
         });
     }
 }
