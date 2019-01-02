@@ -17,5 +17,15 @@ var alertTip={
                 },this.time)
             }
         });
+    },
+    errorTips:function(){
+        layer.open({
+            title:"",
+            content:"<div style='text-align:center'>博客发布失败</div>",
+            closeBtn:0,
+            btnAlign:'c',
+            time:5000,
+            timer:null
+        });
     }
 }
