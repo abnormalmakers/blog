@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.http import HttpResponse,HttpResponseRedirect
+from .models import Article,Article_tag
+from register.models import Users
+from django.db import transaction
+import main
 import json
 # Create your views here.
 
@@ -57,20 +61,42 @@ class WriteBlog_view(View):
 
     def post(self,request):
         try:
-            print(request.POST)
-            title=request.POST.get('title','')
-            tag=request.POST.getlist('tag','')
-            content = request.POST.get('content', '')
-            # 验证博客提交
-            if not title:
-                dic={'code':121,'msg':'博客标题不能为空'}
-                return HttpResponse(json.dumps(dic),content_type='application/json')
-            elif not content:
-                dic = {'code': 122, 'msg': '博客内容不能为空'}
+            # 判断当前是否处于登录状态
+            is_login = main.isLogin(request)
+            if is_login:
+                title=request.POST.get('title','')
+                tag=request.POST.getlist('tag','')
+                content = request.POST.get('content', '')
+                # 验证博客提交
+                if not title:
+                    dic={'code':121,'msg':'博客标题不能为空'}
+                    return HttpResponse(json.dumps(dic),content_type='application/json')
+                elif not content:
+                    dic = {'code': 122, 'msg': '博客内容不能为空'}
+                    return HttpResponse(json.dumps(dic), content_type='application/json')
+
+                # 查询当前作者id
+                user=Users.objects.get(phone=request.session['phone'])
+                # 确保数据库的原子操作
+                with transaction.atomic():
+                    # # 插入博客
+                    Article.objects.create(user_id=user.id,title=title,content=content)
+                    # 如果选择了文章标签，插入标签
+                    # 找到该作者刚刚插入的博客
+                    result=Article.objects.filter(user_id=user.id).order_by('-ariticle_id')
+                    if tag:
+                        for i in tag:
+                            # 找到对应的标签，并关联article
+                            art_tag=Article_tag.objects.get(tag=i)
+                            art_tag.article.add(result[0])
+
+                dic = {'code': 200, 'msg': '发布成功'}
                 return HttpResponse(json.dumps(dic), content_type='application/json')
 
-            dic={'code':200,'msg':'发布成功'}
-            return HttpResponse(json.dumps(dic),content_type='application/json')
+            else:
+                return HttpResponseRedirect('/login/')
+
+
 
 
         except Exception as e:
