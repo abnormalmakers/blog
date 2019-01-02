@@ -55,3 +55,23 @@ django ajax的post请求 csrftoken问题：
 
 
 8.写博客 弹窗 or 页面？
+
+
+
+
+9.ajax tranditional参数
+    默认的话，traditional为false，即jquery会深度序列化参数对象，以适应如PHP和Ruby on Rails框架，
+    但servelt api无法处理，我们可以通过设置traditional 为true阻止深度序列化，然后序列化结果如下：
+    p: ["123", "456", "789"]    =>    p=123&p=456&p=456
+
+10.django request
+    request.POST.getlist    接受传递过来的数组
+
+
+11.在Django保证数据库的原子操作
+    from django.db import transaction
+        tyr:
+            with transaction.atomic():
+                pass
+        except:
+            pass
