@@ -20,31 +20,25 @@
         <div class="main_wrapper">
             <div class="article_header">
                 <div class="title_article">
-                    <h1>这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题这是标题</h1>
+                    <h1>{{article.title}}</h1>
                 </div>
                 <div class="info_article">
-                    <span class="article_tag">标签：java c++ c </span>
-                    <span class="article_author">作者：张三</span>
-                    <span class="publish_date">发布日期：2018-12-24 10:33:22</span>
+                    <span class="article_tag">标签：
+                        {%if tags%}
+                            {%for tag in tags%}<b>{{tag.tag}}&nbsp&nbsp</b>{%endfor%}
+                        {%else%}
+                            无
+                        {%endif%}
+                    </span>
+                    <span class="article_author">作者：<b>{{author}}</b></span>
+                    <span class="publish_date">发布日期：<b>{{article.date}}</b></span>
                 </div>
             </div>
             <article class="article_content">
                 <div class="content_views">
-
-                    <p>这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容
-                    这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容这是es5的内容
-                    这是es5的内容这是es5的内容</p>
-
-                    <p>这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容</p>
-                    <p>这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容</p>
-                    <p>这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容这是es6的内容</p>
-
-                    <p>自行车自行车自行车在打扫的自行车自行车自行车在打扫的自行车自行车自行车在打扫的</p>
-                    <p>自行车自行车自行车在打扫的自行车自行车自行车在打扫的自行车自行车自行车在打扫的</p>
-                    <p>自行车自行车自行车在打扫的自行车自行车自行车在打扫的自行车自行车自行车在打扫的</p>
-                    <p>自行车自行车自行车在打扫的自行车自行车自行车在打扫的自行车自行车自行车在打扫的</p>
-                    <p>自行车自行车自行车在打扫的自行车自行车自行车在打扫的自行车自行车自行车在打扫的</p>
-                    <p>自行车自行车自行车在打扫的自行车自行车自行车在打扫的自行车自行车自行车在打扫的</p>
+                    {%for c in content_arr%}
+                        <p>{{c}}</p>
+                    {%endfor%}
                 </div>
             </article>
         </div>

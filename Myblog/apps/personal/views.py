@@ -15,7 +15,7 @@ class Personal_view(View):
         phone=request.session.get('phone','')
         if phone:
             user=Users.objects.get(phone=phone)
-            articles=user.article_set.all().order_by('-ariticle_id')
+            articles=user.article_set.all().order_by('-article_id')
             return render(request, 'personal.html', locals())
         elif request.COOKIES.get('phone',''):
             phone=request.COOKIES.get('phone','')
@@ -23,7 +23,7 @@ class Personal_view(View):
                 request.session['phone']=phone
                 request.session.set_epiry(60*60*24)
                 user = Users.objects.get(phone=phone)
-                articles = user.article_set.all().order_by('-ariticle_id')
+                articles = user.article_set.all().order_by('-article_id')
                 return render(request, 'personal.html', locals())
         else:
             return HttpResponseRedirect('/login/')
@@ -31,11 +31,22 @@ class Personal_view(View):
     def post(self,request):
         pass
 
+
 #单条博客详情页
 class Blogdetails_view(View):
     def get(self,request,num):
         phone=request.session.get('phone','')
         if phone:
+            # 找到当前博客
+            article=Article.objects.get(article_id=num)
+            # 找到当前博客对应的标签
+            tags=article.article_tag_set.all().values('tag')
+            # 找到作者
+            author=article.user
+            print(author)
+            # 博客内容
+            content_arr=article.content.split('\n')
+
             return render(request,'blogdetails.html',locals())
         else:
             if request.COOKIES['phone']:
@@ -90,7 +101,7 @@ class WriteBlog_view(View):
                     Article.objects.create(user_id=user.id,title=title,content=content)
                     # 如果选择了文章标签，插入标签
                     # 找到该作者刚刚插入的博客
-                    result=Article.objects.filter(user_id=user.id).order_by('-ariticle_id')
+                    result=Article.objects.filter(user_id=user.id).order_by('-article_id')
                     if tag:
                         for i in tag:
                             # 找到对应的标签，并关联article
@@ -102,9 +113,6 @@ class WriteBlog_view(View):
 
             else:
                 return HttpResponseRedirect('/login/')
-
-
-
 
         except Exception as e:
             print(e)
