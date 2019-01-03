@@ -10,8 +10,9 @@
             <a href="{%url 'writeblog'%}" class="write_blog">写博客</a>
         </li>
         <li class="layui-nav-item">
-            <a href="{%url 'personal'%}">
-            {{phoneid}}
+            <a href="/personal/?page=1">
+                {{phoneid}}
+            </a>
             <span class="layui-nav-more"></span></a>
             <dl class="layui-nav-child">
                 <dd><a href="javascript:void(0)" class="update-pwd-btn">修改密码</a></dd>
