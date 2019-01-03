@@ -5,12 +5,12 @@ users:
     用户id              用户手机号           用户密码            是否激活
 
 ariticle
-    ariticle_id         user_id             title                content            date        is_draf
+    article_id         user_id             title                content            date        is_draf
     primary key         IntegerField        Charfiled                               timestamp   booleanField
     文章id              作者id              文章标题              文章内容           发表日期     是否为草噶
 
 tag
-    tag_id              ariticle_id         tag
+    tag_id              article_id         tag
     primary key
     标签id              文章id               标签
 
