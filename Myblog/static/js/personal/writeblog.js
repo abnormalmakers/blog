@@ -33,13 +33,10 @@ var writeblog={
                     'content':content
                 },
                 success:function(data){
-                    console.log(data)
                     if(data.code==200){
-                        // window.location.href='/personal/'
-                        alertTip.errorTips()
+                         alertTip.successTips()
                     }else{
-
-
+                        alertTip.errorTips()
                     }
                 }
             })

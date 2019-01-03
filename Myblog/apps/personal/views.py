@@ -6,6 +6,7 @@ from register.models import Users
 from django.db import transaction
 import main
 import json
+import re
 # Create your views here.
 
 # 个人博客页面
@@ -13,12 +14,16 @@ class Personal_view(View):
     def get(self,request):
         phone=request.session.get('phone','')
         if phone:
+            user=Users.objects.get(phone=phone)
+            articles=user.article_set.all().order_by('-ariticle_id')
             return render(request, 'personal.html', locals())
         elif request.COOKIES.get('phone',''):
             phone=request.COOKIES.get('phone','')
             if phone:
                 request.session['phone']=phone
                 request.session.set_epiry(60*60*24)
+                user = Users.objects.get(phone=phone)
+                articles = user.article_set.all().order_by('-ariticle_id')
                 return render(request, 'personal.html', locals())
         else:
             return HttpResponseRedirect('/login/')
@@ -67,6 +72,8 @@ class WriteBlog_view(View):
                 title=request.POST.get('title','')
                 tag=request.POST.getlist('tag','')
                 content = request.POST.get('content', '')
+                print(content)
+                print(content.split('\n'))
                 # 验证博客提交
                 if not title:
                     dic={'code':121,'msg':'博客标题不能为空'}

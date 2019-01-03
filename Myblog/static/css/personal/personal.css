@@ -4,8 +4,15 @@ body{
 section{
     padding-top: 10px;
 }
-.main{
+.main .main_wrapper:after{
+    content:"";
+    display: block;
+    *zoom:1;
+    clear: both;
 
+}
+.main .main_wrapper{
+    background: #f5f6f7;
 }
 .main_left{
     background:white;
@@ -28,6 +35,16 @@ section{
 /*list 标题*/
 .main .tab_page_list .tab_page_con_t{
     padding:10px 10px 5px 10px;
+    position: relative;
+}
+.main .tab_page_list .tab_page_con_t:after{
+    content:'';
+    position: absolute;
+    left: 12px;
+    bottom: 5px;
+    background: #ccc;
+    height: 1px;
+    width: 95%;
 }
 
 .main .tab_page_list .tab_page_con_t a{
@@ -47,7 +64,8 @@ section{
 }
 /*list 中间文章段落*/
 .main .tab_page_list .tab_page_con_c{
-    padding:0 10px 10px 10px;
+    padding:10px 10px 10px 10px;
+    min-height: 75px;
 }
 .main .tab_page_list .tab_page_con_c p{
     text-indent:30px;
@@ -57,13 +75,13 @@ section{
     text-overflow: ellipsis;
     overflow : hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
 
 /*list 底部 日期*/
 .main .tab_page_list .tab_page_con_b {
-    padding:5px 0;
+    padding:10px 0;
 }
 .main .tab_page_list .tab_page_con_b .publish_date{
     font-size: 12px;
