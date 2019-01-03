@@ -5,7 +5,7 @@ import datetime
 
 # Create your models here.
 class Article(models.Model):
-    ariticle_id=models.AutoField(primary_key=True)
+    article_id=models.AutoField(primary_key=True)
     title=models.CharField(max_length=100,verbose_name='标题')
     content=models.TextField(max_length=5000,verbose_name='内容')
     date=models.DateField(default=datetime.datetime.now().strftime("%Y-%m-%d"))
