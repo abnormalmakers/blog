@@ -75,3 +75,15 @@ django ajax的post请求 csrftoken问题：
                 pass
         except:
             pass
+
+
+12>Django分页：
+    from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+        p=Paginator(data,number) data:分页数据  number:但也多少条
+        contacts=p.page(当前页码)
+
+        contacts.number:当前页码
+        p.num_pages:分页总数
+
+        contacts.has_next，contacts.has_previous:返回布尔
+            是否有下一页，是否有前一页
