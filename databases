@@ -10,17 +10,17 @@ ariticle
     文章id              作者id              文章标题              文章内容           发表日期     是否为草噶
 
 tag
-    tag_id              tag
+    tag_id              ariticle_id         tag
     primary key
-    标签id              标签
+    标签id              文章id               标签
 
 img
-    img_id              ariticle_id         img
+    img_id              article_id         img
     图片id              文章id              图片
 
 
 comments
-    comment_id           user_id            ariticle_id         comments
+    comment_id           user_id            article_id         comments
     primary key
     评论id               用户id            文章id                评论
 
@@ -30,6 +30,6 @@ comments
 
     文章  一对多     评论
     文章  一对多     图片
-    文章  一对多     标签
+    文章  多对多     标签
 
 
