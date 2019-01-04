@@ -122,7 +122,7 @@ section{
     font-size: 13px;
     color:#999;
 }
-.main .main_right .tag_class .article_tag_list li:hover,.main .main_right .friend_link p a:hover{
+.main .main_right .tag_class .article_tag_list a:hover,.main .main_right .friend_link p a:hover{
     color: red;
 }
 .main .main_right .friend_link p{

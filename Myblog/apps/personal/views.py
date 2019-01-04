@@ -28,6 +28,8 @@ class Personal_view(View):
         else:
             return HttpResponseRedirect('/login/')
 
+
+
     @staticmethod
     def blog_list(request, phone):
         # 个人博客列表分页
@@ -35,6 +37,19 @@ class Personal_view(View):
         articles = user.article_set.all().order_by('-article_id')
         p = Paginator(articles, 5)
         pagenum = request.GET['page']
+        tag=request.GET.get('tag','')
+        if tag:
+            art_tag=Article_tag.objects.get(tag=tag)
+            # 找到该标签对应的博客
+            articles_arr=art_tag.article.all()
+            # 从博客结果集中筛选出属于当前用户的博客
+            articles=[]
+            for i in articles_arr:
+                if i.user.id==user.id:
+                    articles.append(i)
+            # 根据对应的博客构建新的分页对象
+            p = Paginator(articles, 5)
+            pagenum = request.GET['page']
         try:
             contacts = p.page(pagenum)
             # 显示多少页 5
