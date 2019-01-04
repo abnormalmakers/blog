@@ -130,5 +130,24 @@ section{
     color:#999;
 }
 
+/*页码跳转样式*/
+#skip_page_section{
+    margin-left: 25px;
+}
+
+#skip_page{
+    font-size: 12px;
+    height: 25px;
+    margin-top: 2px;
+}
+#sure_turnpage{
+    font-size: 12px;
+    height: 25px;
+    margin-top: 2px;
+    line-height: 21px;
+}
+#sure_turnpage:hover{
+    color: #009688;
+}
 
 
