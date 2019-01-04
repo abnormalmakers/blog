@@ -77,19 +77,19 @@ class Blogdetails_view(View):
     def get(self,request,num):
         phone=request.session.get('phone','')
         if phone:
-            self.search_blog(num)
-            return render(request,'blogdetails.html',locals())
+            result=self.search_blog(num,phone)
+            return render(request,'blogdetails.html',result)
         else:
             if request.COOKIES['phone']:
                 request.session['phone']=phone
                 request.session.set_epiry(60*60*24)
-                self.search_blog(num)
-                return render(request, 'blogdetails.html', locals())
+                result = self.search_blog(num,phone)
+                return render(request, 'blogdetails.html', result)
             return HttpResponseRedirect('/login/')
 
     @staticmethod
     # 找到对应博客
-    def search_blog(num):
+    def search_blog(num,phone):
         # 找到当前博客
         article = Article.objects.get(article_id=num)
         # 找到当前博客对应的标签
@@ -98,6 +98,8 @@ class Blogdetails_view(View):
         author = article.user
         # 博客内容列表
         content_arr = article.content.split('\n')
+
+        return locals()
 
 
 
