@@ -46,7 +46,7 @@ var login={
             success:function(data){
                 if(data.code==200) {
                     console.log('登陆成功')
-                    window.location.href = '/personal/'
+                    window.location.href = '/personal/?page=1'
                 }else if(data.code==111){
                     //手机号或密码为空
                     $('.login-errmsg-phone').css('display','block').text(data.msg);
