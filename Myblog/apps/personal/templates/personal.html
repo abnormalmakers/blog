@@ -20,51 +20,59 @@
         <div class="main_wrapper">
             <div class="layui-col-md8 layui-col-md-offset1 main_left">
                 <div class="main_left_wrapper">
-                    <div class="tab_age_con">
-                        {%for article in contacts%}
-                        <dl class="tab_page_list">
-                            <dt class="tab_page_con_t tab_page_list_title">
-                                <h3><a href='/personal/blogdetails/{{article.article_id}}'>{{article.title}}</a></h3>
-                            </dt>
-                            <dd class="tab_page_con_c">
-                                <p>{{article.content}}</p>
-                            </dd>
-                            <dd class="tab_page_con_b">
-                                <div class="tab_page_b_r publish_date">{{article.date}}</div>
-                            </dd>
-                        </dl>
-                        {%endfor%}
-                    </div>
-                    <div class="tab_pagination">
-                        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-8">
-                            <!--上一页-->
-                            {% if contacts.has_previous %}
-                                <a href="?page={{ contacts.previous_page_number }}" class="layui-laypage-prev" data-page="0">上一页</a>
-                            {%else%}
-                                <a href="javascript:void(0)" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
-                            {% endif %}
-
-                            <!--中间-->
-                            {% for page in page_range%}
-                                {%ifequal page contacts.number %}
-                                    <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em _target="?page={{page}}">{{page}}</em></span>
-                                {%else%}
-                                    <a href="?page={{page}}">{{page}}</a>
-                                {%endifequal%}
+                    {%if articles%}
+                        <div class="tab_age_con">
+                            {%for article in contacts%}
+                                <dl class="tab_page_list">
+                                    <dt class="tab_page_con_t tab_page_list_title">
+                                        <h3><a href='/personal/blogdetails/{{article.article_id}}'>{{article.title}}</a></h3>
+                                    </dt>
+                                    <dd class="tab_page_con_c">
+                                        <p>{{article.content}}</p>
+                                    </dd>
+                                    <dd class="tab_page_con_b">
+                                        <div class="tab_page_b_r publish_date">{{article.date}}</div>
+                                    </dd>
+                                </dl>
                             {%endfor%}
-
-                            <!--下一页-->
-                            {%if contacts.has_next%}
-                                <a href="?page={{contacts.next_page_number}}" class="layui-laypage-next" data-page="2">下一页</a>
-                            {%else%}
-                                <a href="javascript:void(0)" class="layui-laypage-next  layui-disabled" data-page="2">下一页</a>
-                            {%endif%}
-                            <span class="layui-laypage-skip" id="skip_page_section">
-                                到第<input type="text" min="1" value="{{contacts.number}}" class="layui-input" id="skip_page">页 / {{p.num_pages}}
-                                <button type="button" class="layui-laypage-btn" id="sure_turnpage">确定</button>
-                            </span>
                         </div>
-                    </div>
+                        <div class="tab_pagination">
+                            <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-8">
+                                <!--上一页-->
+                                {% if contacts.has_previous %}
+                                    <a href="?page={{ contacts.previous_page_number }}" class="layui-laypage-prev" data-page="0">上一页</a>
+                                {%else%}
+                                    <a href="javascript:void(0)" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
+                                {% endif %}
+
+                                <!--中间-->
+                                {% for page in page_range%}
+                                    {%ifequal page contacts.number %}
+                                        <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em _target="?page={{page}}">{{page}}</em></span>
+                                    {%else%}
+                                        <a href="?page={{page}}">{{page}}</a>
+                                    {%endifequal%}
+                                {%endfor%}
+
+                                <!--下一页-->
+                                {%if contacts.has_next%}
+                                    <a href="?page={{contacts.next_page_number}}" class="layui-laypage-next" data-page="2">下一页</a>
+                                {%else%}
+                                    <a href="javascript:void(0)" class="layui-laypage-next  layui-disabled" data-page="2">下一页</a>
+                                {%endif%}
+                                <span class="layui-laypage-skip" id="skip_page_section">
+                                    到第<input type="text" min="1" value="{{contacts.number}}" class="layui-input" id="skip_page">页 / {{p.num_pages}}
+                                    <button type="button" class="layui-laypage-btn" id="sure_turnpage">确定</button>
+                                </span>
+                            </div>
+                        </div>
+                    {%else%}
+                        <div class="content_blank">
+                            <p class="text">
+                                <a href="/personal/write" action-type="widget_publish">你还没有发过微博，点这里发一条微博。</a>
+                            </p>
+                        </div>
+                    {%endif%}
                 </div>
             </div>
             <div class="layui-col-md3 main_right">
@@ -72,14 +80,14 @@
                     <div class="tag_class">
                         <h6>分类标签</h6>
                         <ul class="article_tag_list">
-                            <li>C</li>
-                            <li>C++</li>
-                            <li>Java</li>
-                            <li>Python</li>
-                            <li>PHP</li>
-                            <li>Javascript</li>
-                            <li>H5</li>
-                            <li>Css3</li>
+                            <li class="tag">C</li>
+                            <li class="tag">C++</li>
+                            <li class="tag">Java</li>
+                            <li class="tag">Python</li>
+                            <li class="tag">PHP</li>
+                            <li class="tag">Javascript</li>
+                            <li class="tag">H5</li>
+                            <li class="tag">Css3</li>
                         </ul>
                     </div>
                     <div class="friend_link">
@@ -96,7 +104,7 @@
         </div>
     </div>
 </section>
-
+<input type="hidden" value="{{csrf_token}}" id="csrftoken">
 </body>
 <script src="{%static 'js/common/jquery.js'%}"></script>
 <script src="{%static 'js/layer/layer.js'%}"></script>

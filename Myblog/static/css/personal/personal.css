@@ -86,6 +86,7 @@ section{
     font-size: 12px;
     color: #999;
     float: right;
+    margin-right: 20px;
 }
 .main .tab_page_list .tab_page_con_b:after{
     content:'';
@@ -150,4 +151,15 @@ section{
     color: #009688;
 }
 
+/*博客为空*/
+.content_blank{
+    min-height: 400px;
+}
+.content_blank .text{
+    margin-top: 100px;
+    text-align: center;
+}
+.content_blank .text a{
+    color: #eb7350;
+}
 
