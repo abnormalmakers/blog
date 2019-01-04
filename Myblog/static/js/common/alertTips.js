@@ -37,12 +37,12 @@ var alertTip={
             time:3000,
             timer:null,
             yes:function(){
-                window.location.href('/personal/?page='+1)
+                window.location.href='/personal/?page=1'
             },
             success:function(){
                 clearInterval(this.timer);
                 this.timer=setInterval(function(){
-                    window.location.href='/personal/?page='+1
+                    window.location.href='/personal/?page=1'
                 },this.time)
             }
         });
