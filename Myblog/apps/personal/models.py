@@ -26,7 +26,7 @@ class Article_tag(models.Model):
     tag_id=models.AutoField(primary_key=True)
     tag=models.CharField(max_length=20)
 
-    article=models.ManyToManyField(Article,null=True)
+    article=models.ManyToManyField(Article)
 
 
     def __str__(self):

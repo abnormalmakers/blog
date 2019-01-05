@@ -7,6 +7,7 @@ from .models import Article,Article_tag
 from register.models import Users
 import main
 import json
+import traceback
 
 # Create your views here.
 
@@ -38,18 +39,28 @@ class Personal_view(View):
         p = Paginator(articles, 5)
         pagenum = request.GET['page']
         tag=request.GET.get('tag','')
-        if tag:
-            art_tag=Article_tag.objects.get(tag=tag)
-            # 找到该标签对应的博客
-            articles_arr=art_tag.article.all()
-            # 从博客结果集中筛选出属于当前用户的博客
-            articles=[]
-            for i in articles_arr:
-                if i.user.id==user.id:
-                    articles.append(i)
-            # 根据对应的博客构建新的分页对象
-            p = Paginator(articles, 5)
-            pagenum = request.GET['page']
+        try:
+            if tag:
+                if tag=='Cadd':
+                    tag='C++'
+                art_tag=Article_tag.objects.get(tag=tag)
+
+                # 找到该标签对应的博客
+                articles_arr=art_tag.article.all()
+                # 从博客结果集中筛选出属于当前用户的博客
+                if tag=='C++':
+                    art_tag='Cadd'
+                articles=[]
+                for i in articles_arr:
+                    if i.user.id==user.id:
+                        articles.append(i)
+                # 根据对应的博客构建新的分页对象
+                p = Paginator(articles, 5)
+                pagenum = request.GET['page']
+        except Exception as e:
+            traceback.print_exc()
+            re = HttpResponseRedirect('/common/servererror')
+            return re
         try:
             contacts = p.page(pagenum)
             # 显示多少页 5
@@ -82,7 +93,7 @@ class Personal_view(View):
             re = render(request, 'personal.html', locals())
             return re
         except Exception as e:
-            print(e)
+            traceback.print_exc()
             re = HttpResponseRedirect('/common/servererror')
             return re
 
@@ -172,6 +183,6 @@ class WriteBlog_view(View):
                 return HttpResponseRedirect('/login/')
 
         except Exception as e:
-            print(e)
+            traceback.print_exc()
             dic = {'code': 129, 'msg': '服务器异常'}
             return HttpResponse(json.dumps(dic), content_type='application/json')
