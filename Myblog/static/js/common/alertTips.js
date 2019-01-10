@@ -5,6 +5,7 @@ var alertTip={
             content:"<div style='text-align:center'>注册成功，正在跳往注册页面</div>",
             closeBtn:0,
             btnAlign:'c',
+            anim:0,
             time:5000,
             timer:null,
             yes:function(){
@@ -25,6 +26,7 @@ var alertTip={
             closeBtn:0,
             btnAlign:'c',
             time:3000,
+            anim:0,
             timer:null
         });
     },
@@ -34,6 +36,7 @@ var alertTip={
             content:"<div style='text-align:center'>博客发布成功</div>",
             closeBtn:0,
             btnAlign:'c',
+            anim:0,
             time:3000,
             timer:null,
             yes:function(){
@@ -46,5 +49,18 @@ var alertTip={
                 },this.time)
             }
         });
+    },
+    confirmTips:function(fn,blog_id,csrftoken){
+        layer.open({
+            title:"",
+            content:"<div style='text-align:center'>是否删除博客?</div>",
+            closeBtn:0,
+            btnAlign:'c',
+            anim:0,
+            btn:['确定','取消'],
+            yes:function(){
+                fn(blog_id,csrftoken)
+            }
+        })
     }
 }

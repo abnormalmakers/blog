@@ -33,6 +33,7 @@
                     <span class="article_author">作者：<b>{{author}}</b></span>
                     <span class="publish_date">发布日期：<b>{{article.date}}</b></span>
                 </div>
+                <div class="layui-btn layui-btn-warm del-blog" id="del-blog">删除博客</div>
             </div>
             <article class="article_content">
                 <div class="content_views">
@@ -44,5 +45,13 @@
         </div>
     </div>
 </section>
+<!--csrftoken-->
+<input type="hidden" value="{{csrf_token}}" id="csrftoken">
+<!--博客id-->
+<input type="hidden" value="{{num}}" id="blog_id">
 </body>
+<script src="{%static 'js/common/jquery.js'%}"></script>
+<script src="{%static 'js/layer/layer.js'%}"></script>
+<script src="{%static 'js/common/alertTips.js'%}"></script>
+<script src="{%static 'js/personal/blogdetails.js'%}"></script>
 </html>
