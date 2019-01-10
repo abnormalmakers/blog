@@ -9,6 +9,7 @@ class Article(models.Model):
     title=models.CharField(max_length=100,verbose_name='标题')
     content=models.TextField(max_length=5000,verbose_name='内容')
     date=models.DateField(default=datetime.datetime.now().strftime("%Y-%m-%d"))
+    is_del=models.BooleanField(default=True)
 
     user=models.ForeignKey(Users,null=True)
 
