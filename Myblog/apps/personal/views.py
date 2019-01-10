@@ -35,7 +35,7 @@ class Personal_view(View):
     def blog_list(request, phone):
         # 个人博客列表分页
         user = Users.objects.get(phone=phone)
-        articles = user.article_set.all().order_by('-article_id')
+        articles = user.article_set.filter(is_del=False).order_by('-article_id')
         p = Paginator(articles, 5)
         pagenum = request.GET['page']
         tag=request.GET.get('tag','')
@@ -46,7 +46,7 @@ class Personal_view(View):
                 art_tag=Article_tag.objects.get(tag=tag)
 
                 # 找到该标签对应的博客
-                articles_arr=art_tag.article.all()
+                articles_arr=art_tag.article.filter(is_del=False).order_by('-article_id')
                 # 从博客结果集中筛选出属于当前用户的博客
                 if tag=='C++':
                     art_tag='Cadd'
@@ -112,6 +112,23 @@ class Blogdetails_view(View):
                 result = self.search_blog(num,phone)
                 return render(request, 'blogdetails.html', result)
             return HttpResponseRedirect('/login/')
+
+    def post(self,request,num):
+        try:
+            id=request.POST.get('id','')
+            if not id:
+                dic = {'code': 204, 'msg': "未找到博客，删除失败"}
+                return HttpResponse(json.dumps(dic), content_type="application/json")
+            del_blog=Article.objects.get(article_id=id)
+            del_blog.is_del=True
+            del_blog.save()
+            dic={'code':200,'msg':"删除成功"}
+            return HttpResponse(json.dumps(dic),content_type="application/json")
+        except Exception as e:
+            traceback.print_exc()
+            dic = {'code': 203, 'msg': "服务器异常,删除失败"}
+            return HttpResponse(json.dumps(dic), content_type="application/json")
+
 
     @staticmethod
     # 找到对应博客
