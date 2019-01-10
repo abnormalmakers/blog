@@ -97,3 +97,11 @@ django ajax的post请求 csrftoken问题：
 
 
 13 get问号传参 带有特殊字符后台获取为空 eg:（+）
+
+
+14.js获取url
+    url=window.location.href
+
+15.修改django中models的defalut
+    1.注释掉该字段，生成中间文件并同步到数据库
+    2.撤销注释，重新同步到数据库
