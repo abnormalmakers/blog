@@ -105,3 +105,9 @@ django ajax的post请求 csrftoken问题：
 15.修改django中models的defalut
     1.注释掉该字段，生成中间文件并同步到数据库
     2.撤销注释，重新同步到数据库
+
+16.django中的连接查询 筛选
+    1对多：
+        a=A.objects.get(id=1)
+        b=a.b_set.all()   选出对应所有
+        b=a.b_set.filter(query)   选出符合条件的
