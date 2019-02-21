@@ -66,6 +66,7 @@ django ajax的post请求 csrftoken问题：
 
 10.django request
     request.POST.getlist    接受传递过来的数组
+    前端ajax请求必须加上trandition:true属性
 
 
 11.在Django保证数据库的原子操作

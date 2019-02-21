@@ -14,12 +14,12 @@ class Login_view(View):
         phone=request.session.get('phone','')
         print('login session phone:',phone)
         if phone:
-            return HttpResponseRedirect('/personal/')
+            return HttpResponseRedirect('/personal/?page=1')
         elif request.COOKIES.get('phone',''):
                 phone= request.COOKIES.get('phone')
                 request.session['phone']=phone
                 request.session.set_expiry(60*60*24)
-                return HttpResponseRedirect('/personal/')
+                return HttpResponseRedirect('/personal/?page=1')
         else:
             return render(request, 'login.html', locals())
 

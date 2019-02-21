@@ -85,12 +85,12 @@ class Register_views(View):
         print("当前验证码valid_code:", valid_code)
         phone=request.session.get('phone','')
         if phone:
-            return HttpResponseRedirect('/personal/')
+            return HttpResponseRedirect('/personal/?page=1')
         elif request.COOKIES.get('phone',''):
                 phone= request.COOKIES.get('phone')
                 request.session['phone']=phone
                 request.session.set_expiry(60*60*24)
-                return HttpResponseRedirect('/personal/')
+                return HttpResponseRedirect('/personal/?page=1')
         else:
             return render(request, 'register.html', locals())
 
